@@ -18,8 +18,8 @@ scrapy
 
 # Datenbank
 sqlalchemy
-sqlalchemy
-sqlalchemy
+pymongo
+psycopg2
 pyarrow
 
 # Spark
@@ -45,6 +45,6 @@ notebook
 ipykernel
 
 # Debugging
-tqdm
+tqdm               
 pyyaml
 loguru
