@@ -1,0 +1,50 @@
+
+# Basic Python Packages
+numpy
+pandas
+python-dateutil
+requests
+
+# API
+pydantic
+python-dotenv
+
+# Web Scraping
+beautifulsoup4
+lxml
+selenium
+webdriver-manager
+scrapy
+
+# Datenbank
+sqlalchemy
+sqlalchemy
+sqlalchemy
+pyarrow
+
+# Spark
+pyspark
+
+# Machine Learning
+scikit-learn
+statsmodels
+prophet
+
+# Data Cleaning
+dask
+
+# Visualization
+matplotlib
+seaborn
+plotly
+folium
+
+# jupyter
+jupyterlab
+notebook
+ipykernel
+
+# Debugging
+tqdm
+pyyaml
+loguru
