@@ -208,5 +208,6 @@ __marimo__/
 
 
 # Data
+docker-compose.yml
 data/
 Data/
