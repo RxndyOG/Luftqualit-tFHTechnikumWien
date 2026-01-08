@@ -21,6 +21,7 @@ sqlalchemy
 pymongo
 psycopg2
 pyarrow
+argparse
 
 # Spark
 pyspark
