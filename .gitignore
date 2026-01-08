@@ -212,8 +212,10 @@ docker-compose.yml
 
 data/*
 Data/*
+!Data/.gitkeep
 
 exports/
 export/
 
 DataOutputLayer/*
+!DataOutputLayer/.gitkeep
