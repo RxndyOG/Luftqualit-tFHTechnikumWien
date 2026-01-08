@@ -167,9 +167,14 @@ missing_traffic_years.show(200, truncate=False)
 
 # %%
 from pyspark.ml.feature import VectorAssembler
-from pyspark.ml.regression import RandomForestRegressor, LinearRegression
+from pyspark.ml.regression import RandomForestRegressor
 from pyspark.ml import Pipeline
 from pyspark.ml.evaluation import RegressionEvaluator
+
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
 
 # %%
 # ---------------------------
@@ -178,13 +183,15 @@ from pyspark.ml.evaluation import RegressionEvaluator
 
 # Beispiel: setze hier einen existierenden Schadstoff-Spaltennamen aus dem Pivot:
 # LABEL_COL = # oder "SO2", "NMVOC", "NH3", "PM2_5"
-LABEL_COL = "NOX"
+pollutants = ["NOX", "SO2", "NMVOC", "NH3", "PM2_5"]
 
 # Features: fürs Erste nur der Traffic (du kannst später weitere Features ergänzen)
-FEATURE_COLS = ["traffic_road_traffic_avg", AIR_YEAR_COL]
+FEATURE_COLS = ["traffic_road_traffic_avg", "year_feature"]
 
 # Option 1: fehlende Traffic-Werte auf 0 setzen (nur fürs schnelle Testen!)
 IMPUTE_MISSING_TRAFFIC_WITH_ZERO = True
+
+PLOTS_DIR = "../DataOutputLayer/"
 
 # %%
 if IMPUTE_MISSING_TRAFFIC_WITH_ZERO:
@@ -196,49 +203,11 @@ else:
 if "PM2.5" in joined.columns:
     joined = joined.withColumnRenamed("PM2.5", "PM2_5")
 
+model_df = model_df.withColumn("year_feature", F.col("Jahr").cast("double"))
+
 print("Spalten im joined:", model_df.columns)
 
 # %%
-from pyspark.ml.feature import VectorAssembler
-from pyspark.ml.regression import RandomForestRegressor
-from pyspark.ml import Pipeline
-from pyspark.ml.evaluation import RegressionEvaluator
-
-LABEL_COL = "NOX"
-FEATURE_COLS = ["traffic_road_traffic_avg", "year_feature"]
-
-model_df = joined.withColumn("year_feature", F.col("Jahr").cast("double"))
-
-cols = ["Jahr", LABEL_COL] + FEATURE_COLS
-data = model_df.select(*cols).dropna(subset=[LABEL_COL] + FEATURE_COLS)
-
-train, test = data.randomSplit([0.8, 0.2], seed=42)
-
-assembler = VectorAssembler(inputCols=FEATURE_COLS, outputCol="features")
-model = RandomForestRegressor(featuresCol="features", labelCol=LABEL_COL, numTrees=200, maxDepth=8)
-
-pipeline = Pipeline(stages=[assembler, model])
-fitted = pipeline.fit(train)
-
-preds = fitted.transform(test)
-
-rmse = RegressionEvaluator(labelCol=LABEL_COL, predictionCol="prediction", metricName="rmse").evaluate(preds)
-r2 = RegressionEvaluator(labelCol=LABEL_COL, predictionCol="prediction", metricName="r2").evaluate(preds)
-
-print("RMSE:", rmse)
-print("R2:", r2)
-
-preds.select("Jahr", LABEL_COL, "prediction").orderBy("Jahr").show(200, truncate=False)
-
-
-# %%
-from pyspark.ml.feature import VectorAssembler
-from pyspark.ml.regression import RandomForestRegressor
-from pyspark.ml import Pipeline
-from pyspark.ml.evaluation import RegressionEvaluator
-
-FEATURE_COLS = ["traffic_road_traffic_avg", "year_feature"]
-pollutants = ["NOX", "SO2", "NMVOC", "NH3", "PM2_5"]
 
 results = []
 
@@ -269,6 +238,65 @@ for label in pollutants:
 
     results.append((label, rmse, r2))
     print(f"{label}: RMSE={rmse:.2f}, R2={r2:.3f}")
+    
+    # ---- Plot-Daten als pandas (wenige Jahre → ok) ----
+    pdf = preds.toPandas().sort_values("Jahr")
 
+    # 1) Zeitreihe: Ist vs Prognose
+    plt.figure()
+    plt.plot(pdf["Jahr"], pdf[label], marker="o")
+    plt.plot(pdf["Jahr"], pdf["prediction"], marker="o")
+    plt.xlabel("Jahr")
+    plt.ylabel(label)
+    plt.title(f"{label}: Ist vs Prognose (Test) | R2={r2:.3f}, RMSE={rmse:.2f}")
+    plt.legend(["Ist", "Prognose"])
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOTS_DIR, f"{label}_timeseries_test.png"), dpi=200)
+    plt.close()
+
+    # 2) Scatter: Ist vs Prognose + 45° Linie
+    plt.figure()
+    plt.scatter(pdf[label], pdf["prediction"])
+    mn = min(pdf[label].min(), pdf["prediction"].min())
+    mx = max(pdf[label].max(), pdf["prediction"].max())
+    plt.plot([mn, mx], [mn, mx])
+    plt.xlabel("Ist")
+    plt.ylabel("Prognose")
+    plt.title(f"{label}: Ist vs Prognose (Scatter, Test) | R2={r2:.3f}")
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOTS_DIR, f"{label}_scatter_test.png"), dpi=200)
+    plt.close()
+
+
+
+# %%
+
+if results:
+    res_df = pd.DataFrame(results, columns=["pollutant", "rmse", "r2"]).sort_values("pollutant")
+    res_df.to_csv(os.path.join(PLOTS_DIR, "metrics_overview.csv"), index=False)
+
+    # R2 Balken
+    plt.figure()
+    plt.bar(res_df["pollutant"], res_df["r2"])
+    plt.xlabel("Schadstoff")
+    plt.ylabel("R2")
+    plt.title("Modellgüte (R2) pro Schadstoff")
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOTS_DIR, "overview_r2.png"), dpi=200)
+    plt.close()
+
+    # RMSE Balken
+    plt.figure()
+    plt.bar(res_df["pollutant"], res_df["rmse"])
+    plt.xlabel("Schadstoff")
+    plt.ylabel("RMSE")
+    plt.title("Fehler (RMSE) pro Schadstoff")
+    plt.tight_layout()
+    plt.savefig(os.path.join(PLOTS_DIR, "overview_rmse.png"), dpi=200)
+    plt.close()
+
+    print("Plots gespeichert unter:", os.path.abspath(PLOTS_DIR))
+else:
+    print("Keine Ergebnisse zum Plotten erzeugt.")
 
 
