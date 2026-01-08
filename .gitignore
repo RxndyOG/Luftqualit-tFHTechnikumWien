@@ -210,11 +210,10 @@ __marimo__/
 # Data
 docker-compose.yml
 
-data/
-Data/
-
-DownloadedData/
-downloadeddata/
+data/*
+Data/*
 
 exports/
 export/
+
+DataOutputLayer/*

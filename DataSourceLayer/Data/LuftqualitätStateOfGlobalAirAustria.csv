@@ -1,0 +1,37 @@
+﻿Exposure Id,Type,Country,ISO3,Region,Name,Exposure Lower,Exposure Mean,Exposure Upper,Year,Pollutant,Pollutant Name,Region Name,Units
+108780,country,Austria,AUT,country,Austria,14.9,25,38,1990,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108806,country,Austria,AUT,country,Austria,17.7,25.2,35.9,1991,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108807,country,Austria,AUT,country,Austria,18.3,24.8,34.4,1992,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108808,country,Austria,AUT,country,Austria,18.8,24.4,32.7,1993,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108809,country,Austria,AUT,country,Austria,19.4,24,30.8,1994,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108781,country,Austria,AUT,country,Austria,17.8,24.6,34.9,1995,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108810,country,Austria,AUT,country,Austria,20,23.2,27.6,1996,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108811,country,Austria,AUT,country,Austria,20.1,22.9,26.9,1997,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108812,country,Austria,AUT,country,Austria,20.1,22.5,26.1,1998,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108813,country,Austria,AUT,country,Austria,19.5,22.1,25.5,1999,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108782,country,Austria,AUT,country,Austria,20.5,21.2,21.9,2000,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108783,country,Austria,AUT,country,Austria,19.5,20.1,20.7,2001,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108784,country,Austria,AUT,country,Austria,20,20.6,21.1,2002,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108785,country,Austria,AUT,country,Austria,20.7,21.2,21.8,2003,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108786,country,Austria,AUT,country,Austria,18.1,18.6,19.1,2004,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108787,country,Austria,AUT,country,Austria,19.7,20.2,20.8,2005,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108788,country,Austria,AUT,country,Austria,17.9,18.2,18.6,2006,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108789,country,Austria,AUT,country,Austria,16.1,16.5,16.9,2007,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108790,country,Austria,AUT,country,Austria,14.7,15.1,15.5,2008,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108791,country,Austria,AUT,country,Austria,15.1,15.7,16.4,2009,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108792,country,Austria,AUT,country,Austria,16,16.7,17.4,2010,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108793,country,Austria,AUT,country,Austria,16.1,16.8,17.5,2011,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108794,country,Austria,AUT,country,Austria,13.7,14.3,14.9,2012,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108795,country,Austria,AUT,country,Austria,14.9,15.5,16,2013,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108796,country,Austria,AUT,country,Austria,13.1,13.7,14.2,2014,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108797,country,Austria,AUT,country,Austria,12.8,13.5,14.1,2015,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108798,country,Austria,AUT,country,Austria,12.2,12.8,13.4,2016,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108799,country,Austria,AUT,country,Austria,12.2,12.9,13.4,2017,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108800,country,Austria,AUT,country,Austria,13.2,13.8,14.4,2018,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108801,country,Austria,AUT,country,Austria,10.4,11.1,11.6,2019,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108802,country,Austria,AUT,country,Austria,9.77,10.3,10.8,2020,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108803,country,Austria,AUT,country,Austria,10.2,10.8,11.3,2021,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108804,country,Austria,AUT,country,Austria,10.1,10.6,11.2,2022,pm25,PM<sub>2.5</sub>,Country,µg/m3
+108805,country,Austria,AUT,country,Austria,9.7,10,10.3,2023,pm25,PM<sub>2.5</sub>,Country,µg/m3
+,,,,,,,,,,,,,
+,citation,Health Effects Institute. 2023. State of Global Air 2023. www.stateofglobalair.org [accessed: 11/24/2025]. Data source: Global Burden of Disease Study 2020. IHME, 2023.,,,,,,,,,,,
