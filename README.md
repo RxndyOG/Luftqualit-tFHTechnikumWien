@@ -1,4 +1,4 @@
-# Luftqualit-tFHTechnikumWien
+# LuftqualitaetFHTechnikumWien
 
 Java Version 17.0.x needed for pyspark
     https://adoptium.net/de/temurin/releases?version=17&os=any&arch=any
