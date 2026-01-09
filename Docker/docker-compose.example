@@ -32,36 +32,6 @@ services:
     networks:
       - smartcity-net
 
-  spark-master:
-    image: apache/spark:3.5.1
-    container_name: Luftqualitaet-spark-master
-    restart: unless-stopped
-    environment:
-      - SPARK_MODE=master
-    ports:
-      - "8080:8080"
-      - "4040:4040"
-      - "7077:7077"
-    volumes:
-      - ./spark-app:/opt/spark-app
-    command: >
-      /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
-    networks:
-      - smartcity-net
-
-  spark-worker:
-    image: apache/spark:3.5.1
-    container_name: Luftqualitaet-spark-worker
-    restart: unless-stopped
-    depends_on:
-      - spark-master
-    environment:
-      - SPARK_MODE=worker
-    command: >
-      /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
-    networks:
-      - smartcity-net
-
 networks:
   smartcity-net:
 
