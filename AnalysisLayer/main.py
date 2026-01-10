@@ -177,11 +177,7 @@ import matplotlib.pyplot as plt
 
 
 # %%
-# ---------------------------
-# HIER ANPASSEN
-# ---------------------------
 
-# Beispiel: setze hier einen existierenden Schadstoff-Spaltennamen aus dem Pivot:
 # LABEL_COL = # oder "SO2", "NMVOC", "NH3", "PM2_5"
 pollutants = ["NOX", "SO2", "NMVOC", "NH3", "PM2_5"]
 
@@ -199,7 +195,6 @@ if IMPUTE_MISSING_TRAFFIC_WITH_ZERO:
 else:
     model_df = joined
 
-# Wenn du schon joined hast:
 if "PM2.5" in joined.columns:
     joined = joined.withColumnRenamed("PM2.5", "PM2_5")
 
