@@ -81,21 +81,19 @@ def cast_de_number_safe(df, colname: str):
     return df
 
 # %%
-# ---------------------------
-# Traffic2: Wide -> Long
-# ---------------------------
-TRAFFIC_REGION_SRC_COL = "Bundesland"            # ExportVerkehr2
+
+TRAFFIC_REGION_SRC_COL = "Bundesland"           
 TRAFFIC_VALUE_COL      = "ROAD_TRAFFIC"
 TRAFFIC_YEAR_COL       = "YEAR"
 
-# year columns are digits like "1990", "2001", ...
+
 year_cols = [c for c in traffic_raw.columns if c.isdigit()]
 year_cols_sorted = sorted(year_cols, key=lambda x: int(x))
 
 if not year_cols_sorted:
     raise ValueError("Keine Jahres-Spalten (digit columns) in ExportVerkehr2 gefunden.")
 
-# stack expression: stack(n, '1990', `1990`, '1991', `1991`, ...) as (YEAR, ROAD_TRAFFIC)
+
 stack_args = ", ".join([f"'{y}', `{y}`" for y in year_cols_sorted])
 stack_expr = f"stack({len(year_cols_sorted)}, {stack_args}) as ({TRAFFIC_YEAR_COL}, {TRAFFIC_VALUE_COL})"
 
@@ -103,13 +101,9 @@ traffic_long = (traffic_raw
     .select(F.col(TRAFFIC_REGION_SRC_COL).alias("Region_src"), F.expr(stack_expr))
 )
 
-# Cast year and value
 traffic_long = traffic_long.withColumn(TRAFFIC_YEAR_COL, F.col(TRAFFIC_YEAR_COL).cast("int"))
 traffic_long = cast_de_number_safe(traffic_long, TRAFFIC_VALUE_COL)
 
-# Region name harmonization between files
-# - Verkehr2: Niederoesterreich / Oberoesterreich / OESTERREICH
-# - Schadstoff: Niederoestereich / Oberoestereich / AT
 REGION_MAP = {
     "Niederoesterreich": "Niederoestereich",
     "Oberoesterreich": "Oberoestereich",
